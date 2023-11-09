@@ -82,8 +82,11 @@ abstract contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI, IER
 
         uint256[] memory batchBalances = new uint256[](accounts.length);
 
-        for (uint256 i = 0; i < accounts.length; ++i) {
+        for (uint256 i; i < accounts.length;) {
             batchBalances[i] = balanceOf(accounts.unsafeMemoryAccess(i), ids.unsafeMemoryAccess(i));
+            unchecked {
+                ++i;
+            }
         }
 
         return batchBalances;
@@ -152,7 +155,7 @@ abstract contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI, IER
 
         address operator = _msgSender();
 
-        for (uint256 i = 0; i < ids.length; ++i) {
+        for (uint256 i; i < ids.length;) {
             uint256 id = ids.unsafeMemoryAccess(i);
             uint256 value = values.unsafeMemoryAccess(i);
 
@@ -169,6 +172,10 @@ abstract contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI, IER
 
             if (to != address(0)) {
                 _balances[id][to] += value;
+            }
+
+            unchecked {
+                ++i;
             }
         }
 
