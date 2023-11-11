@@ -17,7 +17,7 @@ Supportted formats:
 Params:
 
 ```
-./movespace_db_uploader_cli --type [mddoc, code] --path [the_path_for_content] --metadata [the_path_for_metadata] --embedbaseid [embedbase_id] --insert
+./movespace_db_uploader_cli --type [mddoc, code] --path [the_path_for_content] --metadata [the_path_for_metadata] --datasetid [dataset_id] --insert
 ```
 
 Remember `EMBEDBASE_KEY` should be in the `env`!
@@ -25,8 +25,8 @@ Remember `EMBEDBASE_KEY` should be in the `env`!
 Cmd examples:
 
 ```bash
-$ ./movespace_db_uploader_cli --type mddoc --path example_data/eth/analysis/erc20.md --metadata example_data/eth/analysis/erc20.json --embedbaseid eth-smart-contracts-analysis --insert
-$ ./movespace_db_uploader_cli --type code --path example_data/eth/sliced/erc20.json --embedbaseid eth-smart-contracts-sliced --insert
+$ ./movespace_db_uploader_cli --type mddoc --path example_data/eth/analysis/erc20.md --metadata example_data/eth/analysis/erc20.json --datasetid eth-smart-contracts-analysis --insert
+$ ./movespace_db_uploader_cli --type code --path example_data/eth/sliced/erc20.json --datasetid eth-smart-contracts-sliced --insert
 ```
 
 ## Installation
