@@ -38,8 +38,10 @@ defmodule MovespaceDbUploaderCli.CLI do
     transform data from dataset to csv, so it could be manager by git.
   """
   def handle_args(%{bymovespace: true, transform: true,  datasetid: dataset_id, to: "csv"}) do
-    csv_data = MovespaceInteractor.get_all(@api_gateway, dataset_id)
-    CSVWriter.write_csv_file(csv_data, "#{dataset_id}_#{:os.system_time(:millisecond)}.csv")
+    csv_data_no_vector = MovespaceInteractor.get_all(:no_vector, @api_gateway, dataset_id)
+    CSVWriter.write_csv_file(csv_data_no_vector, "#{dataset_id}_#{:os.system_time(:millisecond)}.csv")
+    csv_data_vector = MovespaceInteractor.get_all(:vector, @api_gateway, dataset_id)
+    CSVWriter.write_csv_file(csv_data_vector, "#{dataset_id}_#{:os.system_time(:millisecond)}_vector.csv")
   end
 
   def handle_args(%{insert: true, datasetid: dataset_id, type: "code", path: path}) do
