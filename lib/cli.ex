@@ -26,10 +26,10 @@ defmodule MovespaceDbUploaderCli.CLI do
       |> handle_args()
   end
 
-  def handle_args(%{bymovespace: true, insert: true, datasetid: dataset_id, type: "mddoc", path: path}) do
+  def handle_args(%{bymovespace: true, insert: true, datasetid: dataset_id, type: "mddoc", path: path, metadata: metadata}) do
     contents = MarkdownParser.split_file(path)
     Enum.map(contents, fn %{content: content} ->
-      MovespaceInteractor.insert_data(@api_gateway, dataset_id, content)
+      MovespaceInteractor.insert_data(@api_gateway, dataset_id, content, metadata)
       Logger.info("-- upload an item to vectorDB by API --")
     end)
   end

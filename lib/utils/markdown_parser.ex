@@ -27,7 +27,7 @@ defmodule MarkdownParser do
             acc
         else 
             {comment, rem} = List.pop_at(comments, 0)
-            [bef, aft] = String.split(file, "<!--#{comment}-->")
+            [bef, aft] = String.split(file, "<!--#{comment}-->", parts: 2)
             handle_md_by_the_comments(
                 aft, # file = aft
                 acc ++ [%{content: "#{bef}"}], # acc + new
