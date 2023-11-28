@@ -3,5 +3,6 @@
     "description": "whitepapers for all the projects!",
     "metadata_format": {"keyword_1": "value_1", "keyword_2": "value_2", "keyword_3": "value_3", "keyword_4": "value_4", "keyword_5": "value_5"},
     "github_link": "https://github.com/NonceGeek/movespace-dataset-all-whitpapers",
-    "uploader_smart_contract": "bnb://0x00"
+    "tagger_smart_contract": "bnb-test://0x545EDf91e91b96cFA314485F5d2A1757Be11d384",
+    "tagger_dapp": "https://greenfield-eight.vercel.app/"
 }

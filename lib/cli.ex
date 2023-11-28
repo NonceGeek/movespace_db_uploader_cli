@@ -11,28 +11,38 @@ defmodule MovespaceDbUploaderCli.CLI do
   require Logger
 
   @embedbase_key System.get_env("EMBEDBASE_KEY")
-  @api_gateway System.get_env("API_GATEWAY")
+  # @api_gateway System.get_env("API_GATEWAY")
+  # @api_gateway "https://faas.movespace.xyz"
+  @api_gateway "http://localhost:4003"
   
   @doc """
     main entry.
+    TODO: reorg the types!
   """
   def main(args) do
       {opts, _others, _others_2} =
       OptionParser.parse(args,
-          strict: [path: :string, datasetid: :string, type: :string, insert: :boolean, delete: :boolean, metadata: :string, bymovespace: :boolean, transform: :boolean, to: :string],
-          aliases: [f: :filepath, e: :datasetid, t: :type, i: :insert, d: :delete, m: :metadata])
+          strict: [path: :string, datasetid: :string, type: :string, insert: :boolean, delete: :boolean, metadata: :string, filename: :string, bymovespace: :boolean, automatic: :boolean, transform: :boolean, to: :string],
+          aliases: [f: :filepath, e: :datasetid, t: :type, i: :insert, d: :delete, m: :metadata, a: :automatic])
       opts
       |> Enum.into(%{})
       |> handle_args()
   end
 
-  def handle_args(%{bymovespace: true, insert: true, datasetid: dataset_id, type: "mddoc", path: path, metadata: metadata}) do
+
+  def handle_args(%{bymovespace: true, insert: true, automatic: true, datasetid: dataset_id, type: "mddoc", path: path, filename: filename}) do
+  
+  end
+
+  def handle_args(%{bymovespace: true, insert: true, datasetid: dataset_id, type: "mddoc", path: path, filename: filename}) do
     contents = MarkdownParser.split_file(path)
     Enum.map(contents, fn %{content: content} ->
-      MovespaceInteractor.insert_data(@api_gateway, dataset_id, content, metadata)
+      MovespaceInteractor.insert_data(@api_gateway, dataset_id, content, %{file_name: filename})
       Logger.info("-- upload an item to vectorDB by API --")
     end)
   end
+
+
 
   @doc """
     transform data from dataset to csv, so it could be manager by git.

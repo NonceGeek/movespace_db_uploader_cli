@@ -20,10 +20,11 @@ defmodule MovespaceInteractor do
                 params: [dataset_id]
             }
         )
-
+        
         # fetch all the data by Enum.
         Enum.reduce(1..count, [["id",  "vector"]], fn index, acc ->
             data = fetch_data(:vector, endpoint, dataset_id, index)
+            Logger.info("--fetch data --")
             acc ++ [data]
         end)
 
@@ -40,8 +41,9 @@ defmodule MovespaceInteractor do
         )
 
         # fetch all the data by Enum.
-        Enum.reduce(1..count, [["id", "uuid", "data"]], fn index, acc ->
+        Enum.reduce(1..count, [["id", "uuid", "data", "auto_metadata"]], fn index, acc ->
             data = fetch_data(:no_vector, endpoint, dataset_id, index)
+            Logger.info("--fetch data --")
             acc ++ [data]
         end)
 
@@ -51,7 +53,7 @@ defmodule MovespaceInteractor do
         {
             :ok,
             %{
-            "result" => [id, uuid, data, _, _]}
+            "result" => [id, uuid, data, metadata, _]}
         } = 
             ExHttp.http_post(
                 "#{endpoint}/api/v1/run?name=VectorAPI&func_name=fetch_data_with_vector", 
@@ -59,7 +61,7 @@ defmodule MovespaceInteractor do
                     params: [dataset_id, data_id]
                 }
             )
-        [id, uuid, data]
+        [id, uuid, data, Poison.encode!(metadata)]
     end
 
     def fetch_data(:vector, endpoint, dataset_id, data_id) do
