@@ -28,13 +28,35 @@ defmodule MarkdownParser do
                     {"p", [], [content], %{}} = p
                     %{content: content, metadata: %{h2: h2_content, h3: h3_content}}
                 end)
-                
             end)
         end)
         |> List.flatten()
+        |> handle_by_tags() # TODO: work for backdrop hackahton, it should be change here.
     end
 
-    
+    def handle_by_tags(elem) do
+        Enum.map(elem, fn elem -> 
+            %{metadata: %{h3: h3_content} = metadata} = elem
+            metadata =
+                case h3_content do
+                    "BASE BATTLES" ->
+                        metadata 
+                        |> Map.put(:chain, "base")
+                        |> Map.put(:contract_address, "0xd5c7a4c07252c5ff1ba913b16e38507e4af73886")
+                    "BASEPAINT" ->
+                        metadata 
+                        |> Map.put(:chain, "base")
+                        |> Map.put(:contract_address, "0xba5e05cb26b78eda3a2f8e3b3814726305dcac83")
+                    "FRIEND.TECH" ->
+                        metadata 
+                        |> Map.put(:chain, "base")
+                        |> Map.put(:contract_address, "0xcf205808ed36593aa40a44f10c7f7c2f67d4a4d4")
+                    _ ->
+                        metadata
+                end
+            Map.put(elem, :metadata, metadata)
+        end)
+    end
 
     def format_with_level(tree, level) do
         all_h2 = tree |> Enum.filter(fn elem -> elem |> Tuple.to_list |> Enum.fetch!(0) == level end)

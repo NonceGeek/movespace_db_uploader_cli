@@ -1,8 +1,8 @@
 defmodule MovespaceInteractor do
     require Logger
-    def insert_data(endpoint, dataset_id, data, metadata \\ %{}) do
+    def insert_data(endpoint, api_key, dataset_id, data, metadata \\ %{}) do
         body =  %{
-            params: [dataset_id, data, metadata]
+            params: [api_key, dataset_id, data, metadata]
         }
         # insert data into movespace by API.
         ExHttp.http_post(

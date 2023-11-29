@@ -11,9 +11,10 @@ defmodule MovespaceDbUploaderCli.CLI do
   require Logger
 
   @embedbase_key System.get_env("EMBEDBASE_KEY")
-  # @api_gateway System.get_env("API_GATEWAY")
+  @api_gateway System.get_env("API_GATEWAY")
+  @api_key System.get_env("API_KEY")
   # @api_gateway "https://faas.movespace.xyz"
-  @api_gateway "http://localhost:4003"
+  # @api_gateway "http://localhost:4003"
   
   @doc """
     main entry.
@@ -30,14 +31,20 @@ defmodule MovespaceDbUploaderCli.CLI do
   end
 
 
-  def handle_args(%{bymovespace: true, insert: true, automatic: true, datasetid: dataset_id, type: "mddoc", path: path, filename: filename}) do
-  
+  def handle_args(%{bymovespace: true, insert: true, automatic: true, datasetid: dataset_id, type: "mddoc", path: path}) do
+    IO.puts inspect @api_key
+    IO.puts inspect @api_gateway
+    contents = MarkdownParser.split_file_by_struct(path)
+    Enum.map(contents, fn %{content: content, metadata: metadata} ->
+      MovespaceInteractor.insert_data(@api_key, @api_gateway, dataset_id, content, metadata)
+      Logger.info("-- upload an item to vectorDB by API --")
+    end)
   end
 
   def handle_args(%{bymovespace: true, insert: true, datasetid: dataset_id, type: "mddoc", path: path, filename: filename}) do
     contents = MarkdownParser.split_file(path)
     Enum.map(contents, fn %{content: content} ->
-      MovespaceInteractor.insert_data(@api_gateway, dataset_id, content, %{file_name: filename})
+      MovespaceInteractor.insert_data(@api_key, @api_gateway, dataset_id, content, %{file_name: filename})
       Logger.info("-- upload an item to vectorDB by API --")
     end)
   end

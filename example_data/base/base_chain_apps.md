@@ -36,6 +36,8 @@ AppliedPrimate Megaforce Sentinel Collectible Card Game is an onchain PVP game f
 
 ### BASE BATTLES
 
+<!--{"contract_address": "0xd5c7a4c07252c5ff1ba913b16e38507e4af73886", "chain": "base"}-->
+
 basebattles.xyz
 
 BaseBattles is a game about war, designed around Game Theory concepts. Players purchase votes to add firepower to their team, frantically building armies until a fixed final block.
@@ -48,6 +50,7 @@ Base Treasure Hunt is a new and thrilling experience for digital collectors that
 
 ### BASEPAINT
 
+<!--{"contract_address": "0xba5e05cb26b78eda3a2f8e3b3814726305dcac83", "chain": "base"}-->
 basepaint.xyz
 
 BasePaint is a collaborative pixel art app. Artists come together daily to paint on a shared pixel-art canvas. The next day, the canvas is turned into a 24-hour open edition NFT mint. Once the mint concludes, that day’s artists receive a share of ETH from the mint.
@@ -97,6 +100,7 @@ mail.dmail.ai
 Dmail Network is building an AI-powered decentralized communication infra, offering encrypted emails, consolidated notifications, and targeted marketing services across multiple chains and dApps.
 
 ### FRIEND.TECH
+<!--{"contract_address": "0xcf205808ed36593aa40a44f10c7f7c2f67d4a4d4", "chain": "base"}-->
 
 friend.tech
 
